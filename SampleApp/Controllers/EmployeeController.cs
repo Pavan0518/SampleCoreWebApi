@@ -71,6 +71,9 @@ namespace SampleApp.Controllers
         public async Task<IActionResult> SaveEmployee(MdlSaveEmp objEmp)
         {
             _logger.LogInformation("In Save Employee.");
+            //bool bHasEmail = _iEmpRepo.IsEmailIdExists(objEmp.Email, objEmp.Id);
+            //if(bHasEmail)
+            //    return this.StatusCode(StatusCodes.Status409Conflict, "EmailId already exists.");
             int result = await Task.Run(() => _iEmpRepo.SaveEmployee(objEmp));
             if (result == 1)
                 return this.StatusCode(StatusCodes.Status201Created, "Successfully Saved");
@@ -78,7 +81,7 @@ namespace SampleApp.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error.");
         }
         [HttpDelete("DeleteEmployee")]
-        public async Task<IActionResult> SaveEmployee(int Id)
+        public async Task<IActionResult> DeleteEmployee(int Id)
         {
             int result = await Task.Run(() => _iEmpRepo.DeleteEmployee(Id));
             if (result == 1)

@@ -89,5 +89,16 @@ namespace SampleApp.Repository
             string strQuery = "select count(*) from Employee where Id = @Id order by 2 desc";
             return _dbConnection.Query<MdlSearchEmp>(strQuery, new { Id = Id }).Count();
         }
+        public bool IsEmailIdExists(string EmailId, int Id)
+        {
+            bool bReturn = false;
+            string strQuery = "select * from Employee where email = " + EmailId;
+            var obj = _dbConnection.Query<MdlSearchEmp>(strQuery).ToList();
+            if (obj == null) return bReturn;
+            if (Id == 0) return bReturn;
+            if (Id != 0 && obj[0].Id != Id) bReturn = true;
+            return bReturn;
+        }
     }
+
 }

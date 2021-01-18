@@ -14,5 +14,6 @@ namespace SampleApp.Repository
         int DeleteEmployee(int Id);
         Task<IEnumerable<MdlSearchEmp>> SearchEmployee(MdlSearchEmp objEmp);
         int IsEmpExists(int Id);
+        bool IsEmailIdExists(string EmailId, int Id);
     }
 }
