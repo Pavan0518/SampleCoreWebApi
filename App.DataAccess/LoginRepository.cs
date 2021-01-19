@@ -60,6 +60,7 @@ namespace SampleApp.Repository
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("UserLoginId", objLogin.email),
                 new Claim("UID", objLogin.email.ToString()),
+                new Claim("FName", objLogin.first_name.ToString())
             };
 
             var token = new JwtSecurityToken(
