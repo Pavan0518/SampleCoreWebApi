@@ -26,11 +26,13 @@
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.8.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Npgsql" Version="5.0.1.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+    <PackageReference Include="System.Runtime.Caching" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,7 +40,7 @@
       <HintPath>..\App.DataAccess\bin\Debug\netstandard2.0\App.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="App.Models">
-      <HintPath>..\App.Models\bin\Debug\netstandard2.0\App.Models.dll</HintPath>
+      <HintPath>..\App.DataAccess\bin\Debug\netstandard2.0\App.Models.dll</HintPath>
     </Reference>
   </ItemGroup>
 

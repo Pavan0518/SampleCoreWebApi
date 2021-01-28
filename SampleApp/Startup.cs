@@ -1,5 +1,6 @@
 ﻿//using System;
 //using System.Collections.Generic;
+using System;
 using System.Data;
 //using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -28,11 +30,13 @@ namespace SampleApp
         }
 
         public IConfiguration Configuration { get; }
+        public ILocalMemoryRepository ILmRepo { get; set; }
+        public IMemoryCache ImemoryCache { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddMemoryCache();
             services.AddCors();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -53,10 +57,12 @@ namespace SampleApp
                 config.Filters.Add(typeof(CustomExceptionHandler));
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IConfiguration>(Configuration);
+            //services.AddSingleton<IMemoryCache>(ImemoryCache);
             services.AddTransient<IDbConnection>((sp) => new NpgsqlConnection(Configuration.GetConnectionString("DefaultConnection").ToString()));
             services.AddSingleton<ILoginRepository, LoginRepository>();
             services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
             services.AddSingleton<IUserSignUpRepository, UserSignUpRepository>();
+            services.AddSingleton<ILocalMemoryRepository, LocalMemoryRepository>();
             services.AddSwaggerGen(c =>
             {
                 // configure SwaggerDoc and others
@@ -87,8 +93,13 @@ namespace SampleApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime lifetime, ILocalMemoryRepository ilmr, IMemoryCache imemoryCache) // 
         {
+            ILmRepo = ilmr;
+            ImemoryCache = imemoryCache;
+            //ilmr.GetItems(1);
+            lifetime.ApplicationStarted.Register(OnApplicationStarted);
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -110,6 +121,13 @@ namespace SampleApp
                 c.DocumentTitle = "Sample App";
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1");
             });
+        }
+
+        public async void OnApplicationStarted()
+        {
+            //LocalMemoryRepository olmr = new LocalMemoryRepository();
+            var objIConfigData = await ILmRepo.GetItems(null);
+            ImemoryCache.Set("config_data", objIConfigData, TimeSpan.FromDays(1));
         }
     }
 }
