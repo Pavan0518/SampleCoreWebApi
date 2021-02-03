@@ -4,6 +4,7 @@ using System;
 using System.Data;
 //using System.Linq;
 using System.Text;
+using App.DataAccess.IRepository;
 //using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -18,6 +19,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Npgsql;
 using SampleApp.Filters.Exception;
+using SampleApp.Middlewares;
+//using SampleApp.Middlewares;
 using SampleApp.Repository;
 
 namespace SampleApp
@@ -36,7 +39,7 @@ namespace SampleApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMemoryCache();
+            //services.AddMemoryCache();
             services.AddCors();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -63,6 +66,7 @@ namespace SampleApp
             services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
             services.AddSingleton<IUserSignUpRepository, UserSignUpRepository>();
             services.AddSingleton<ILocalMemoryRepository, LocalMemoryRepository>();
+            services.AddSingleton<InMemoryMiddleware>();
             services.AddSwaggerGen(c =>
             {
                 // configure SwaggerDoc and others
@@ -89,17 +93,28 @@ namespace SampleApp
                 });
 
             });
+            services.AddStackExchangeRedisCache(options => {
+                options.Configuration = "localhost:6379";
+            });
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime lifetime, ILocalMemoryRepository ilmr, IMemoryCache imemoryCache) // 
+        public void Configure(IApplicationBuilder app,
+            IHostingEnvironment env,
+            ILoggerFactory loggerFactory,
+            IApplicationLifetime lifetime,
+            ILocalMemoryRepository ilmr, 
+            //IRedisCacheRepository iRcr,
+            IMemoryCache imemoryCache) // 
         {
             ILmRepo = ilmr;
             ImemoryCache = imemoryCache;
+            //app.UseInMemoryMiddleware();
             //ilmr.GetItems(1);
-            lifetime.ApplicationStarted.Register(OnApplicationStarted);
-            
+            //lifetime.ApplicationStarted.Register(OnApplicationStarted);
+            //lifetime.ApplicationStarted.Register(() => iRcr.GetItems());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -129,5 +144,9 @@ namespace SampleApp
             var objIConfigData = await ILmRepo.GetItems(null);
             ImemoryCache.Set("config_data", objIConfigData, TimeSpan.FromDays(1));
         }
+        //public async void OnApplicationStartedRedis(IRedisCacheRepository iRcr)
+        //{
+
+        //}
     }
 }

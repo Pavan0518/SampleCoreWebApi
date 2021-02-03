@@ -20,8 +20,12 @@ namespace SampleApp.Repository
 {
     public class LocalMemoryRepository : ILocalMemoryRepository
     {
-       
-         public async Task<List<LocalMemoryresponse>> GetItems(int? Id)
+        //IMemoryCache _iMemoryCache;
+        //public LocalMemoryRepository(IMemoryCache iMemoryCache)
+        //{
+        //    _iMemoryCache = iMemoryCache;
+        //}
+        public async Task<List<LocalMemoryresponse>> GetItems(int? Id)
         {
             List<LocalMemoryresponse> objLmData = new List<LocalMemoryresponse>();
             string endpoint = "https://jsonplaceholder.typicode.com/posts";
@@ -36,6 +40,7 @@ namespace SampleApp.Repository
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     objLmData = JsonConvert.DeserializeObject<List<LocalMemoryresponse>>(apiResponse);
+                    //_iMemoryCache.Set("config_data", objLmData, TimeSpan.FromDays(1));
                     //_iMemoryCache.Set("configData", objLmData);
                 }
             }

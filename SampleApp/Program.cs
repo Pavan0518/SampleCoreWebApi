@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SampleApp.Middlewares;
 
 namespace SampleApp
 {
@@ -25,6 +27,5 @@ namespace SampleApp
                     builder.AddLog4Net("log4net.config");
                     builder.AddFilter("Microsoft", LogLevel.None);
                 });
-
     }
 }

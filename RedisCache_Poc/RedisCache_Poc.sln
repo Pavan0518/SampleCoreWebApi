@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisCache_Poc", "RedisCache_Poc.csproj", "{DB7D0397-FD4B-4671-8FB6-EE61C7075A65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Models", "..\Redis.Models\Redis.Models.csproj", "{2B9139B2-BCE5-4610-B499-38A9EE1930EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.DataAccess", "..\Redis.DataAccess\Redis.DataAccess.csproj", "{0820DFDD-2A39-4F1D-99CF-C43F46A21E4C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB7D0397-FD4B-4671-8FB6-EE61C7075A65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB7D0397-FD4B-4671-8FB6-EE61C7075A65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB7D0397-FD4B-4671-8FB6-EE61C7075A65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB7D0397-FD4B-4671-8FB6-EE61C7075A65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B9139B2-BCE5-4610-B499-38A9EE1930EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B9139B2-BCE5-4610-B499-38A9EE1930EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B9139B2-BCE5-4610-B499-38A9EE1930EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B9139B2-BCE5-4610-B499-38A9EE1930EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0820DFDD-2A39-4F1D-99CF-C43F46A21E4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0820DFDD-2A39-4F1D-99CF-C43F46A21E4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0820DFDD-2A39-4F1D-99CF-C43F46A21E4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0820DFDD-2A39-4F1D-99CF-C43F46A21E4C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70671CEF-DC9E-46C4-8838-D67B34B5D319}
+	EndGlobalSection
+EndGlobal
